@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age calculator</title>
+  <!--links for styles and fonts-->
+  <link rel="icon" type="image/icon"  href="./assets/images/favicon-32x32.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,800&display=swap');
+    :root{
+      --purple: hsl(259, 100%, 65%);
+      --light-red: hsl(0, 100%, 67%);
+      --white: hsl(0, 0%, 100%);
+      --off-white: hsl(0, 0%, 94%);
+      --light-grey: hsl(0, 0%, 86%);
+      --smokey-grey: hsl(0, 1%, 44%);
+      --off-black: hsl(0, 0%, 8%);
+    }
+    body{
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      box-sizing: border-box;
+      background-color:var(--off-white);
+      height: 100vh;
+
+      /*Display properties*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .main-container{
+      width: 80vw;
+      margin: auto;
+      height: 70vh;
+      background-color: white;
+      border-radius: 2rem 2rem 30% 2rem;
+      box-shadow: 0 0 20px -5px var(--off-black);
+     /*Display properties*/
+      display: grid;
+      grid-template-rows: 4.5fr 5.5fr;
+    }
+    /* the form part of the main container field*/
+    .main-container form{
+      /*Display properties*/
+      display: flex;
+      align-items: center;
+      justify-content:space-evenly;
+      margin:0 1rem;
+      border-bottom: 1px solid var(--smokey-grey);
+      position: relative;
+    }
+    .main-container fieldset{
+      border: none;
+      padding: 0;
+      margin: 0;
+
+      /*display properties*/
+      display: grid;
+    }
+    .main-container fieldset input[type="number"]{
+      width: 2.5rem;
+      padding: 0.5rem 1rem;
+      height: 1.5rem;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      border:2px solid var(--light-grey);
+    }
+    .main-container fieldset input[type="number"]::placeholder{
+      color:var(--light-grey);
+      font-weight: 900;
+    }
+    .main-container form fieldset input[type="number"]:focus{
+      border: 2px solid var(--purple);
+      outline: none;
+    }
+    .main-container fieldset label{
+      font-size: small;
+      color: var(--smokey-grey);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0.25rem 0;
+    }
+    .main-container form fieldset small{ 
+      font-size:xx-small;
+      margin: 0.5rem 0;
+      color: var(--light-red);
+      font-style: italic;
+    }
+    .main-container form .error{
+      font-size:x-small;
+      color: var(--light-red);
+      position: absolute;
+      left: 5%;
+      top: 70%;
+      font-style: italic;
+    }
+    /*Main containter svg image that will work as a button*/
+    .main-container svg{
+      position: absolute;
+      background-color: var(--purple);
+      top:46%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      padding: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px -5px var(--purple);
+    }
+    .main-container svg:hover{
+      background-color: var(--off-black);
+    }
+    .none{
+      display: none;
+    }
+    /*The output field */
+    .main-container .output{
+      position: relative;
+    }
+    .main-container .output div{
+      display: flex;
+      align-items: center;
+      margin-left: 1.5rem;
+    }
+    .main-container .output div p{
+      font-size: 3rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--purple);
+
+    }.main-container .output div span{
+      margin-left:1rem ;
+      font-size: 2.5rem;
+      font-style: italic;
+      font-weight: 900;
+      color: var(--off-black);
+    }
+    .main-container .output .years {
+      position: absolute;
+      top: 0;
+    }
+    .main-container .output .months {
+      position: absolute;
+      top: 17%;
+    }
+    .main-container .output .days {
+      position: absolute;
+      top: 35%;
+    }
+    .hidden{
+        visibility: hidden;
+      }
+    @media (min-width:425px){
+      .none{
+      display: none;
+      }
+      .main-container{
+        width: 80vw;
+      }
+      .main-container form{
+        display: flex;
+        margin: 0 3rem;
+        align-content: center;
+        justify-content: space-between;
+      }
+      .main-container form fieldset input[type="number"]{
+        width: 5rem;
+        height: 2rem;
+        font-weight: 900;
+        font-size: 1.25rem;
+      }
+      .main-container .output div{
+        margin-left: 3rem;
+      }
+      .main-container form fieldset small{ 
+      font-size: 8px;
+      margin: 0.25rem 0;
+      color: var(--light-red);
+      }
+      .main-container form .error{
+      font-size:small;
+      color: var(--light-red);
+      position: absolute;
+      left: 0%;
+      top: 72%;
+      font-style: italic;
+      }
+      .hidden{
+        visibility: hidden;
+      }
+    }
+    @media (min-width:768px){
+      .main-container{
+        width: 60vw;
+      }
+      .none{
+      display: none;
+      }
+      .main-container form{
+        display: flex;
+        margin: 0.5rem 3rem;
+        align-content: center;
+        justify-content: space-between;
+      }
+      .main-container form fieldset input[type="number"]{
+        width: 4rem;
+        height: 2rem;
+        font-weight: 900;
+        font-size: 1rem;
+      }
+      .main-container form fieldset small{ 
+      font-size:5px;
+      margin: 0.25rem 0;
+      color: var(--light-red);
+      }
+      .hidden{
+        visibility: hidden;
+      }
+    }
+    @media (min-width:1024px){
+      .main-container{
+        position: relative;
+        width: 50vw;
+      }
+      .none{
+      display: none;
+      }
+      .main-container form{
+        width: 70%;
+        display: flex;
+      }
+      .main-container form fieldset input[type="number"]{
+        width: 6rem;
+        height: 2rem;
+        font-weight: 900;
+        font-size: 1rem;
+      }
+      .main-container svg{
+        top: 44%;
+        left: 80%;
+        padding: 1.5rem;
+      }
+      .main-container form fieldset small{ 
+      font-size:xx-small;
+      margin: 0.5rem 0;
+      color: var(--light-red);
+      }
+      /*Hide all the small elements*/
+      .hidden{
+        visibility: hidden;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <form>
+      <fieldset>
+        <label for="day">Day</label>
+        <input type="number" name="day" placeholder="DD" required autofocus autocomplete="none">
+        <small class="hidden">This field is required</small>
+      </fieldset>
+      <fieldset>
+        <label for="day">Month</label>
+        <input type="number" name="month" placeholder="MM" required autocomplete="none">
+        <small class="hidden">This field is required</small>
+      </fieldset>
+      <fieldset>
+        <label for="day">Year</label>
+        <input type="number" name="month" placeholder="YYYY" required autocomplete="none">
+        <small class="hidden">This field is required</small>
+      </fieldset>
+      <small class="none error">Must be a valid date</small>
+    </form>
+    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="44" viewBox="0 0 46 44">
+      <g fill="none" stroke="#FFF" stroke-width="2">
+        <path d="M1 22.019C8.333 21.686 23 25.616 23 44
+        M23 44V0
+        M45 22.019C37.667 21.686 23 25.616 23 44"/>
+      </g>
+    </svg>
+    <div class="output">
+      <div class="years">
+        <p>--</p><span>years</span>
+      </div>
+      <div class="months">
+        <p>--</p><span>months</span>
+      </div>
+      <div class="days">
+        <p>--</p><span>days</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+// Variables for inputs 
+const input = document.querySelectorAll('input[type="number"]');
+const errors = document.querySelectorAll('fieldset small');
+const labels = document.querySelectorAll('fieldset label');
+const errorMessage = document.querySelector('.error');
+const svgClick = document.querySelector('svg');
+
+// Functions 
+function validateForm() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  // Validate day
+  validateInput(input[0], labels[0], errors[0], isNaN(input[0].value) || input[0].value > 31);
+
+  // Validate month
+  validateInput(input[1], labels[1], errors[1], isNaN(input[1].value) || input[1].value > 12);
+
+  // Validate year
+  validateInput(input[2], labels[2], errors[2], isNaN(input[2].value) || input[2].value > currentYear);
+
+  function validateInput(inputField, label, error, condition) {
+    if (inputField.value === "" || condition) {
+      inputField.style.border = '1px solid var(--light-red)';
+      label.style.color = 'var(--light-red)';
+      error.style.visibility = 'visible';
+    } else {
+      inputField.style.border = '2px solid var(--light-grey)';
+      label.style.color = 'var(--off-black)';
+      error.style.visibility = 'hidden';
+    }
+  }
+}
+
+// Event listeners 
+svgClick.addEventListener('click', function (e) {
+  e.preventDefault();
+  validateForm();
+
+  const day = parseInt(input[0].value);
+  const month = parseInt(input[1].value) - 1;
+  const year = parseInt(input[2].value);
+
+  const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (day > months[month] || (month === 1 && (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) && day > 29)) {
+    errorMessage.classList.remove('none');
+  } else {
+    errorMessage.classList.add('none');
+
+    const currentDate = new Date();
+    const birthDay = new Date(year, month, day);
+    const output = document.querySelectorAll('.output div p');
+
+    const Years = (currentDate.getMonth() < month || (currentDate.getMonth() === month && currentDate.getDate() < day))
+      ? parseInt(currentDate.getFullYear()) - year - 1
+      : parseInt(currentDate.getFullYear()) - year;
+
+    output[0].innerText = Years;
+
+    const MonthDiff = (currentDate.getMonth() < month)
+      ? 12 - (month - parseInt(currentDate.getMonth()))
+      : (currentDate.getMonth() === month && currentDate.getDate() === day)
+        ? (month) - parseInt(currentDate.getMonth())
+        : parseInt(currentDate.getMonth()) - (month + 1);
+
+    output[1].innerText = MonthDiff;
+
+    const monthIn = months[month];
+    const Days = (currentDate.getMonth() < month || (currentDate.getMonth() === month && currentDate.getDate() < day))
+      ? (monthIn - day) + parseInt(currentDate.getDate())
+      : (currentDate.getMonth() === month && currentDate.getDate() === day)
+        ? parseInt(currentDate.getDate()) - day
+        : (monthIn - day) + parseInt(currentDate.getDate());
+
+    output[2].innerText = Days;
+  }
+});
+
+</script>
+</html>
